@@ -36,7 +36,7 @@ interface ImageLinks {
   extraLarge: string;
 }
 
-interface Item {
+export interface Item {
   volumeInfo: VolumeInfo;
 }
 

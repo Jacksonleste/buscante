@@ -16,7 +16,7 @@ export class ListaLivrosComponent {
   buscaLivros(){
     this.livroService.buscar(this.textoBusca).subscribe({
       next: (response)=>{
-        console.log(response)
+        console.log()
       }
     })
   }

@@ -1,5 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { LivrosResultado } from '../interfaces/livros';
 
 @Injectable({
   providedIn: 'root',
@@ -7,10 +9,10 @@ import { Injectable } from '@angular/core';
 export class LivroService {
   private API: string = 'https://www.googleapis.com/books/v1/volumes';
 
-  constructor(private http: HttpClient, private httpParams: HttpParams) {}
+  constructor(private http: HttpClient) {}
 
-  buscar(textoBusca: string) {
-    const params = new HttpParams().set('q', textoBusca);
-    this.http.get(this.API, { params });
+  buscar(textoBusca: string): Observable<LivrosResultado> {
+    let params = new HttpParams().set('q', textoBusca);
+    return this.http.get<LivrosResultado>(this.API, { params });
   }
 }

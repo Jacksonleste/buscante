@@ -3,8 +3,9 @@
   <div class="busca">
     <input
       type="search"
+      [(ngModel)]="textoBusca"
     >
-    <button>
+    <button (click)="buscaLivros()">
       <img src="assets/imagens/icone-busca.png" alt="Lupa de cor roxa">
     </button>
   </div>

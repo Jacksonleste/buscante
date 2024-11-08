@@ -1,3 +1,4 @@
+import { LivroService } from './../../service/livro.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,8 +9,17 @@ import { Component } from '@angular/core';
 export class ListaLivrosComponent {
 
   listaLivros: [];
+  textoBusca:string = '';
 
-  constructor() { }
+  constructor(private livroService: LivroService) { }
+
+  buscaLivros(){
+    this.livroService.buscar(this.textoBusca).subscribe({
+      next: (response)=>{
+        console.log(response)
+      }
+    })
+  }
 
 }
 

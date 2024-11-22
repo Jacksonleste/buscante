@@ -1,3 +1,4 @@
+import { Item, Livro } from 'src/app/interfaces/livros';
 import { LivroService } from './../../service/livro.service';
 import { Component } from '@angular/core';
 
@@ -8,7 +9,7 @@ import { Component } from '@angular/core';
 })
 export class ListaLivrosComponent {
 
-  listaLivros: [];
+  listaLivros: Livro[];
   textoBusca:string = '';
 
   constructor(private livroService: LivroService) { }
@@ -16,11 +17,28 @@ export class ListaLivrosComponent {
   buscaLivros(){
     this.livroService.buscar(this.textoBusca).subscribe({
       next: (response)=>{
-        console.log()
+        this.listaLivros = this.resultadoParaLivro(response)
       }
     })
   }
 
+  resultadoParaLivro(items:Item[]): Livro[] {
+    const livros:Livro[] = [];
+
+    items.forEach(item =>{
+      livros.push({
+        title: item.volumeInfo.title,
+        authors: item.volumeInfo.authors,
+        description: item.volumeInfo.description,
+        previewLink: item.volumeInfo.infoLink,
+        publishedDate: item.volumeInfo.publishedDate,
+        publisher: item.volumeInfo.publisher,
+        thumbnail: item.volumeInfo.imageLinks.thumbnail,
+      })
+    })
+
+    return livros;
+  }
 }
 
 

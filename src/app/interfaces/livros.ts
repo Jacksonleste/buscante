@@ -1,4 +1,4 @@
-interface Livro {
+export interface Livro {
   title?: string;
   authors?: string[];
   publisher?: string;

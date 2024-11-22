@@ -13,9 +13,8 @@ export class LivroService {
 
   buscar(textoBusca: string): Observable<Item[]> {
     let params = new HttpParams().set('q', textoBusca);
-    return this.http.get<LivrosResultado>(this.API, { params }).pipe(
-      map(res =>res.items),
-      tap(res => console.log('Após o Map', res))
-    );
+    return this.http
+      .get<LivrosResultado>(this.API, { params })
+      .pipe(map((res) => res.items));
   }
 }

@@ -14,17 +14,24 @@
     </button>
   </div>
   <p>Busque por assunto, autoria, nome...</p>
-<div class="container-card" *ngIf="listaLivros?.length > 0, else telaInicial">
+<div class="container-card" *ngIf="listaLivros?.length > 0 && !loading, else telaInicial">
   <div *ngFor="let livro of listaLivros">
     <app-livro [livro]="livro"></app-livro>
   </div>
 </div>
+
 <ng-template #telaInicial>
-  <div class="imagens">
+  <div class="imagens" *ngIf="!loading, else loadingComponent">
     <h1 class="titulo">Busque o livro <br> que quiser na <br> nossa estante!</h1>
     <img
       class="ilustracao"
       src="../../assets/imagens/ilustracao-estante.png"
       alt="Ilustração de uma pessoa em pé ao lado de uma estante com livros e plantas">
+  </div>
+</ng-template>
+
+<ng-template #loadingComponent>
+  <div>
+    <img src="../../../assets/imagens/loading.svg" alt="Carregando">
   </div>
 </ng-template>

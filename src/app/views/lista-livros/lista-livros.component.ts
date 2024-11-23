@@ -12,13 +12,16 @@ export class ListaLivrosComponent {
   listaLivros: Livro[];
   textoBusca:string = '';
   inputOnFocus:boolean = false;
+  loading: boolean = false;
 
   constructor(private livroService: LivroService) { }
 
   buscaLivros(){
+    this.loading = true;
     this.livroService.buscar(this.textoBusca).subscribe({
       next: (response)=>{
-        this.listaLivros = this.resultadoParaLivro(response)
+        this.listaLivros = this.resultadoParaLivro(response);
+        this.loading = false;
       }
     })
   }

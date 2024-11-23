@@ -31,16 +31,16 @@ export class ListaLivrosComponent {
 
     items.forEach(item =>{
       livros.push({
-        title: item.volumeInfo.title,
-        authors: item.volumeInfo.authors,
-        description: item.volumeInfo.description,
-        previewLink: item.volumeInfo.infoLink,
-        publishedDate: item.volumeInfo.publishedDate,
-        publisher: item.volumeInfo.publisher,
-        thumbnail: item.volumeInfo.imageLinks.thumbnail,
+        title: item.volumeInfo?.title,
+        authors: item.volumeInfo?.authors,
+        description: item.volumeInfo?.description,
+        previewLink: item.volumeInfo?.infoLink,
+        publishedDate: item.volumeInfo?.publishedDate,
+        publisher: item.volumeInfo?.publisher,
+        thumbnail: item.volumeInfo?.imageLinks?.thumbnail ?? undefined,
       })
     })
-
+    console.log(livros)
     return livros;
   }
 }

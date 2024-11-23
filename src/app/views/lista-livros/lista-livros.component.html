@@ -4,6 +4,7 @@
     <input
       type="search"
       [(ngModel)]="textoBusca"
+      (keyup.enter)="buscaLivros()"
     >
     <button (click)="buscaLivros()">
       <img src="assets/imagens/icone-busca.png" alt="Lupa de cor roxa">

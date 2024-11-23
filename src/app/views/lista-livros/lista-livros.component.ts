@@ -11,6 +11,7 @@ export class ListaLivrosComponent {
 
   listaLivros: Livro[];
   textoBusca:string = '';
+  inputOnFocus:boolean = false;
 
   constructor(private livroService: LivroService) { }
 

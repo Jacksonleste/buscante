@@ -5,6 +5,9 @@
       type="search"
       [(ngModel)]="textoBusca"
       (keyup.enter)="buscaLivros()"
+      (focus)="inputOnFocus = true"
+      (blur)="inputOnFocus = false"
+      [ngClass]="{ 'search-input-focus': inputOnFocus || textoBusca }"
     >
     <button (click)="buscaLivros()">
       <img src="assets/imagens/icone-busca.png" alt="Lupa de cor roxa">

@@ -63,11 +63,18 @@ section p {
   color: #6C63FF;
 }
 
-input[type='search']:focus {
+/* input[type='search']:focus {
   background-image: none;
   outline: none;
   text-decoration: none;
   padding-left: 10px;
+} */
+
+.search-input-focus {
+  background-image: none !important;
+  outline: none !important;
+  text-decoration: none !important;
+  padding-left: 10px !important;
 }
 
 input[type="search"]::-webkit-search-decoration,

@@ -1,35 +1,41 @@
 import { Item, Livro } from 'src/app/interfaces/livros';
 import { LivroService } from './../../service/livro.service';
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { map, retry, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-lista-livros',
   templateUrl: './lista-livros.component.html',
-  styleUrls: ['./lista-livros.component.css']
+  styleUrls: ['./lista-livros.component.css'],
 })
 export class ListaLivrosComponent {
-
-  listaLivros: Livro[];
-  textoBusca:string = '';
-  inputOnFocus:boolean = false;
+  textoBusca: FormControl = new FormControl();
+  inputOnFocus: boolean = false;
   loading: boolean = false;
 
-  constructor(private livroService: LivroService) { }
+  constructor(private livroService: LivroService) {}
 
-  buscaLivros(){
-    this.loading = true;
-    this.livroService.buscar(this.textoBusca).subscribe({
-      next: (response)=>{
-        this.listaLivros = this.resultadoParaLivro(response);
-        this.loading = false;
+  listarLivros$ = this.textoBusca.valueChanges.pipe(
+    switchMap((value: string) => {
+      this.loading = false;
+      if (value) {
+        return this.livroService.buscar(value);
       }
+      return '';
+    }),
+    map((value) => {
+      if (value != '') {
+        return this.resultadoParaLivro(value as Item[]);
+      }
+      return [];
     })
-  }
+  );
 
-  resultadoParaLivro(items:Item[]): Livro[] {
-    const livros:Livro[] = [];
+  resultadoParaLivro(items: Item[]): Livro[] {
+    const livros: Livro[] = [];
 
-    items.forEach(item =>{
+    items.forEach((item) => {
       livros.push({
         title: item.volumeInfo?.title,
         authors: item.volumeInfo?.authors,
@@ -38,12 +44,9 @@ export class ListaLivrosComponent {
         publishedDate: item.volumeInfo?.publishedDate,
         publisher: item.volumeInfo?.publisher,
         thumbnail: item.volumeInfo?.imageLinks?.thumbnail ?? undefined,
-      })
-    })
-    console.log(livros)
+      });
+    });
+    console.log(livros);
     return livros;
   }
 }
-
-
-

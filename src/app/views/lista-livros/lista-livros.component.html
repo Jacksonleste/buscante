@@ -3,19 +3,18 @@
   <div class="busca">
     <input
       type="search"
-      [(ngModel)]="textoBusca"
-      (keyup.enter)="buscaLivros()"
+      [formControl]="textoBusca"
       (focus)="inputOnFocus = true"
       (blur)="inputOnFocus = false"
-      [ngClass]="{ 'search-input-focus': inputOnFocus || textoBusca }"
+      [ngClass]="{ 'search-input-focus': inputOnFocus || textoBusca.value}"
     >
-    <button (click)="buscaLivros()">
+    <button>
       <img src="assets/imagens/icone-busca.png" alt="Lupa de cor roxa">
     </button>
   </div>
   <p>Busque por assunto, autoria, nome...</p>
-<div class="container-card" *ngIf="listaLivros?.length > 0 && !loading, else telaInicial">
-  <div *ngFor="let livro of listaLivros">
+<div class="container-card" *ngIf="listarLivros$ && !loading, else telaInicial">
+  <div *ngFor="let livro of listarLivros$ | async as Livro">
     <app-livro [livro]="livro"></app-livro>
   </div>
 </div>

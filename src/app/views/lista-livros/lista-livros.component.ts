@@ -2,7 +2,7 @@ import { Item, Livro } from 'src/app/interfaces/livros';
 import { LivroService } from './../../service/livro.service';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { map, retry, switchMap, tap } from 'rxjs';
+import { filter, map, retry, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-lista-livros',
@@ -17,19 +17,11 @@ export class ListaLivrosComponent {
   constructor(private livroService: LivroService) {}
 
   listarLivros$ = this.textoBusca.valueChanges.pipe(
+    filter((value:string) => value.length >= 3),
     switchMap((value: string) => {
-      this.loading = false;
-      if (value) {
-        return this.livroService.buscar(value);
-      }
-      return '';
+      return this.livroService.buscar(value);
     }),
-    map((value) => {
-      if (value != '') {
-        return this.resultadoParaLivro(value as Item[]);
-      }
-      return [];
-    })
+    map((value) => this.resultadoParaLivro(value as Item[])),
   );
 
   resultadoParaLivro(items: Item[]): Livro[] {

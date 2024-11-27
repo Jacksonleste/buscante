@@ -2,7 +2,7 @@ import { Item, Livro } from 'src/app/interfaces/livros';
 import { LivroService } from './../../service/livro.service';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounce, debounceTime, filter, map, retry, switchMap, tap } from 'rxjs';
+import { debounce, debounceTime, distinctUntilChanged, filter, map, retry, switchMap, tap } from 'rxjs';
 
 const PAUSA = 500;
 @Component({
@@ -20,6 +20,9 @@ export class ListaLivrosComponent {
   listarLivros$ = this.textoBusca.valueChanges.pipe(
     debounceTime(PAUSA),
     filter((value:string) => value.length >= 3),
+    map(value => value.toLowerCase()),
+    map(value => value.trim()),
+    distinctUntilChanged(),
     switchMap((value: string) => {
       return this.livroService.buscar(value);
     }),
